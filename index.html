@@ -3,77 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animal Transformations</title>
+    <title>Sun to Moon Transformation</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            color: #333;
+            font-family: 'Comic Neue', cursive;
+            text-align: center;
+            background: linear-gradient(to bottom, #ffcc00, #ff6600);
             margin: 0;
-            padding: 0;
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
-        .container {
+            padding: 20px;
+            height: 100vh;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: background 2s ease-in-out;
         }
-        .card {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin: 10px;
-            width: 300px;
-            text-align: center;
-            padding: 20px;
+        #celestialBody {
+            width: 150px;
+            height: 150px;
+            background-color: #ffcc00;
+            border-radius: 50%;
+            box-shadow: 0 0 50px #ffcc00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 60px;
+            animation: wave 2s infinite;
+            transition: all 2s ease-in-out;
         }
-        .card img {
-            max-width: 100%;
-            border-radius: 10px;
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
         }
-        .card h2 {
-            font-size: 1.5em;
-            margin: 15px 0;
+        .moon {
+            background-color: #cccccc !important;
+            box-shadow: 0 0 50px #cccccc !important;
+            animation: wink 2s infinite;
         }
-        .card p {
-            font-size: 1em;
-            line-height: 1.5;
+        @keyframes wink {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 24px;
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        .show-message {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        #resetButton {
+            display: none;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
+    <h1>Sun to Moon Transformation</h1>
+    <div id="celestialBody">🌞</div>
+    <button onclick="transformToMoon()">Transform to Moon</button>
+    <button id="resetButton" onclick="resetPage()">Start Over</button>
+    <p id="message"></p>
+    <div class="stars" id="stars"></div>
 
-    <h1>Animal Transformations</h1>
+    <script>
+        const messages = [
+            "This time for Sleep ",
+            
+        ];
 
-    <div class="container">
-        <!-- Caterpillar to Butterfly -->
-        <div class="card">
-            <img src="caterpillar.jpg" alt="Caterpillar">
-            <h2>Caterpillar to Butterfly</h2>
-            <p>The transformation from a caterpillar to a butterfly is one of the most fascinating processes in nature. The caterpillar forms a chrysalis and undergoes metamorphosis to emerge as a beautiful butterfly.</p>
-            <img src="butterfly.jpg" alt="Butterfly">
-        </div>
+        function transformToMoon() {
+            const celestialBody = document.getElementById("celestialBody");
+            const messageElement = document.getElementById("message");
+            const starsContainer = document.getElementById("stars");
+            const resetButton = document.getElementById("resetButton");
 
-        <!-- Tadpole to Frog -->
-        <div class="card">
-            <img src="tadpole.jpg" alt="Tadpole">
-            <h2>Tadpole to Frog</h2>
-            <p>A tadpole starts its life in water, breathing through gills. Over time, it develops legs, loses its tail, and transforms into a frog, capable of living both in water and on land.</p>
-            <img src="frog.jpg" alt="Frog">
-        </div>
+            // Transform sun to moon
+            celestialBody.textContent = "🌚";
+            celestialBody.classList.add("moon");
 
-        <!-- Larva to Beetle -->
-        <div class="card">
-            <img src="larva.jpg" alt="Larva">
-            <h2>Larva to Beetle</h2>
-            <p>Beetles undergo complete metamorphosis, starting as larvae, then pupating, and finally emerging as adult beetles. This process can take weeks to years, depending on the species.</p>
-            <img src="beetle.jpg" alt="Beetle">
-        </div>
-    </div>
+            // Add stars to the background
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement("div");
+                star.classList.add("star");
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 2}s`;
+                starsContainer.appendChild(star);
+            }
 
+            // Randomly select a message
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            messageElement.textContent = randomMessage;
+            setTimeout(() => {
+                messageElement.classList.add("show-message");
+            }, 1000);
+
+            // Change background to night sky
+            document.body.style.background = "linear-gradient(to bottom, #000033, #000066)";
+
+            // Disable the transform button and show reset button
+            document.querySelector("button").disabled = true;
+            resetButton.style.display = "block";
+        }
+
+        function resetPage() {
+            const celestialBody = document.getElementById("celestialBody");
+            const messageElement = document.getElementById("message");
+            const starsContainer = document.getElementById("stars");
+            const resetButton = document.getElementById("resetButton");
+
+            // Reset sun
+            celestialBody.textContent = "🌞";
+            celestialBody.classList.remove("moon");
+
+            // Clear stars
+            starsContainer.innerHTML = "";
+
+            // Hide message
+            messageElement.classList.remove("show-message");
+            messageElement.textContent = "";
+
+            // Reset background
+            document.body.style.background = "linear-gradient(to bottom, #ffcc00, #ff6600)";
+
+            // Enable transform button and hide reset button
+            document.querySelector("button").disabled = false;
+            resetButton.style.display = "none";
+        }
+    </script>
 </body>
 </html>
